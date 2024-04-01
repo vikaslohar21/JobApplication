@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">JobApplication</string>
+    <string name="default_web_client_id" translatable="false">YOUR_WEB_CLIENT_ID</string>
+    <string name="phnNo_str">\u0020\u0020\u0020\u0020\u0020 +91 1234567890</string>
+    <string name="email_str">\u0020\u0020\u0020\u0020\u0020 Vikaslohar@gmail.com</string>
+    <string name="location_str">\u0020\u0020\u0020\u0020\u0020 Pali,Rajasthan India</string>
+    <string name="aboutMe_str">Vikas Lohar is a result-driven Android Developer with a passion for leveraging innovative strategies to drive brand growth and customer engagement in the ever-evolving digital landscape.\n\nFeel free to reach me out for any specific queries.\n\n</string>
+    <string name="contact_here_card">Contact Here</string>
+    <string name="personal_info_btn_str">Personal Info</string>
+    <string name="profileName">Vikas Lohar</string>
+    <string name="experience_btn_str">Experience</string>
+    <string name="about_me_card">About Me</string>
+    <string name="experience_card">Experience</string>
+    <string name="top_skills_card">Top Skills</string>
+
+
+</resources>
