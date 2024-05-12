@@ -1,4 +1,4 @@
-package com.example.jobapplication
+package com.example.jobapplication.Fragments
 
 class UserData (
     val profileImageUri: String,

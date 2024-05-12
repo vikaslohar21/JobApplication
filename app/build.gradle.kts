@@ -37,6 +37,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
@@ -48,6 +51,11 @@ dependencies {
 
 
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation("androidx.activity:activity:1.8.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))

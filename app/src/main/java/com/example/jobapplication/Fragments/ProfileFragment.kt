@@ -1,4 +1,4 @@
-package com.example.jobapplication
+package com.example.jobapplication.Fragments
 
 import android.Manifest
 import android.app.Activity
@@ -9,23 +9,22 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.jobapplication.Fragments.ExperienceFragment
-import com.example.jobapplication.Fragments.PersonalInfoFragment
-import com.example.jobapplication.Fragments.TopSkillsFragment
-import com.example.jobapplication.Fragments.UserData
+import com.example.jobapplication.R
 import java.io.ByteArrayOutputStream
 
 @Suppress("DEPRECATION")
-class ProfileActivity : AppCompatActivity() {
+class ProfileFragment : Fragment() {
 
     private val PICK_IMAGE_REQUEST = 1
     private val REQUEST_CAMERA_CAPTURE = 2
@@ -36,12 +35,14 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var userData: UserData
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        profileImageView = findViewById(R.id.profile)
-        captureFromCameraOrGalleryBtn = findViewById(R.id.captureFromCameraOrGalleryBtn)
+        profileImageView = view.findViewById(R.id.profile)
+        captureFromCameraOrGalleryBtn = view.findViewById(R.id.captureFromCameraOrGalleryBtn)
 
         // Initialize userData (replace with your logic to fetch user data)
         userData = UserData(
@@ -49,35 +50,40 @@ class ProfileActivity : AppCompatActivity() {
             post = "Android Developer", // initial value
             username = "YourUsername" // initial value
         )
+
         // Set up click listener for the button
         captureFromCameraOrGalleryBtn.setOnClickListener {
             showImagePickerDialog()
         }
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         if (savedInstanceState == null) {
             loadFragment(PersonalInfoFragment())
         }
-
         // Set click listeners for buttons
-        val prInfoBtn : Button = findViewById(R.id.prInfoBtn)
+        val prInfoBtn : Button = view.findViewById(R.id.prInfoBtn)
         prInfoBtn.setOnClickListener {
             loadFragment(PersonalInfoFragment())
         }
 
-        val expBtn : Button = findViewById(R.id.expBtn)
+        val expBtn : Button = view.findViewById(R.id.expBtn)
         expBtn.setOnClickListener {
             loadFragment(ExperienceFragment())
         }
 
-        val topSkillsBtn : Button = findViewById(R.id.topSkillsBtn)
+        val topSkillsBtn : Button = view.findViewById(R.id.topSkillsBtn)
         topSkillsBtn.setOnClickListener {
             loadFragment(TopSkillsFragment())
         }
-
     }
 
     private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
+        requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_1, fragment)
             .commit()
     }
@@ -85,7 +91,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun showImagePickerDialog() {
         val items = arrayOf("Capture from Camera", "Select from Gallery")
 
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(requireContext())
             .setTitle("Choose an action")
             .setItems(items) { _, which ->
                 val REQUEST_READ_MEDIA_IMAGES_PERMISSION = 0
@@ -121,7 +127,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun checkPermission(permission: String): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
         } else {
             true
         }
@@ -129,7 +135,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun requestPermission(permission: String, requestCode: Int) {
         ActivityCompat.requestPermissions(
-            this,
+            requireActivity(),
             arrayOf(permission),
             requestCode
         )
@@ -177,7 +183,7 @@ class ProfileActivity : AppCompatActivity() {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(
-            contentResolver,
+            requireContext().contentResolver,
             bitmap,
             "Profile_Image",
             null

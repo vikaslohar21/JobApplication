@@ -90,7 +90,7 @@ class SignInActivity : AppCompatActivity() {
                         baseContext, "Authentication successful.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    Intent(this@SignInActivity, ProfileActivity::class.java).also {
+                    Intent(this@SignInActivity, BottomNavActivity::class.java).also {
                         startActivity(it)
                     }
                 } else {
@@ -102,7 +102,6 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
     }
-
     private fun signInWithEmail() {
         val email = emailEditText.text.toString()
         val password = passwordEditText.text.toString()
